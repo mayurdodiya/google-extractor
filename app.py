@@ -608,8 +608,27 @@ class App(ttk.Window):
         self.progress.configure(value=100)
         n = len(self.records)
         self.extract_btn.configure(state="normal" if n else "disabled")
-        self.status_var.set(f"✔ Completed — {n} records. Click 'Extract to Excel' to save.")
-        messagebox.showinfo(APP_TITLE, f"Completed!\n\n{n} businesses collected.\nClick 'Extract to Excel' to save them.")
+        # Auto-save to Downloads (same as the batch queue) — no popup, no Save As dialog.
+        # "Extract to Excel" still works for saving another copy elsewhere.
+        if not n:
+            self.status_var.set("✔ Completed — no businesses found.")
+            self.bell()
+            return
+        name = default_filename(self.type_var.get(), self.location_var.get(), "")
+        if self.stop_event.is_set():
+            name = name.replace(".xlsx", "_partial.xlsx")
+        try:
+            path = unique_path(downloads_dir(), name)
+            export_to_excel(self.records, path)
+            self.batch_records_saved = True  # already saved: a new Start won't ask to discard
+            self.last_saved_file = path
+            self.status_var.set(f"✔ Completed — {n} records saved to Downloads\\{os.path.basename(path)}")
+            self._append_log(f"Saved {n} records to {path}")
+        except Exception as e:
+            self.status_var.set(f"Completed — {n} records, but auto-save failed ({e}). "
+                                f"Use 'Extract to Excel'.")
+            self._append_log(f"ERROR auto-saving: {e}")
+        self.bell()
 
     def _on_close(self):
         if (self.worker and self.worker.is_alive()) or self.batch_running:
