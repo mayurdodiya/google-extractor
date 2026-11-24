@@ -1,0 +1,5 @@
+1. if i import excel(also can add menually) so google extractore fetch data one by one excel data 
+    excel like : 
+        - garment shop  395006
+        - electric shop 395010
+2.one one row data is extracted completed then it should store in to the download folder and start new row example here like garment shop extraction is completed so it should start electric shop row grabing this feature i want to add, also in the UI it will show which is completed and which is in progress and which is pending 

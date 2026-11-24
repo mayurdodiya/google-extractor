@@ -17,6 +17,18 @@ When finished click **Extract to Excel**.
 Tick *"Also check each shop's website for email"* to visit each shop's website looking for an email (slower).
 Google rarely shows emails on listings itself.
 
+## Batch queue (many searches, one after another)
+1. Open the **Batch queue** tab.
+2. **📂 Import Excel**: column A = business type, column B = location / pincode
+   (e.g. `garment shop | 395006`, `electric shop | 395010`). A header row is skipped automatically;
+   one cell like `garment shop 395006` also works. CSV files work too.
+   Or type a search in the Search box and click **➕ Add current search**.
+3. Click **▶ Start queue**. Each row shows Pending → In progress → Completed
+   (or No results / Stopped / Failed). The Results tab shows the running search live.
+4. Every finished row is saved automatically to your **Downloads** folder as
+   `<business>_<location>_<date>.xlsx`. Double-click a row to open its file.
+5. **Stop** saves the current row as `…_partial.xlsx`; **▶ Start queue** again continues with the pending rows.
+
 ## Run from source
 ```
 python -m venv .venv
