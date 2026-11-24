@@ -1,0 +1,17 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# PyInstaller output (rebuild with build.bat; share the .exe via GitHub Releases)
+build/
+dist/
+dist_*/
+*.spec
+build.log
+
+# Local tool data / outputs
+*.xlsx
+debug/
+.claude/settings.local.json
